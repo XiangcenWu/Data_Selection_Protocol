@@ -1,8 +1,6 @@
 # Selecting performance-representative validation sets for developing medical image segmentation neural networks
 Code accompanying the paper
-> [Selecting performance-representative validation sets for developing medical image segmentation neural networks](https://arxiv.org/)\
-> xw, EB, YH
-> _arXiv:XXXXXXXX_.
+
 
 
 The algorithm is based on continuous relaxation and gradient descent in the architecture space. It is able to efficiently design high-performance convolutional architectures for image classification (on CIFAR-10 and ImageNet) and recurrent architectures for language modeling (on Penn Treebank and WikiText-2). Only a single GPU is required.
