@@ -37,15 +37,12 @@ args = parser.parse_args()
 device = args.device
 ##############################
 
-data_list = read_data_list('/home/xiangcen/xiaoyao/prostate_training/data_preparation/data_dir_shuffled_obturator.txt')
-support_set_list, holdout_test_list = data_list[:469], data_list[469:]
-support_set_list, query_set_list = support_set_list[:189], support_set_list[189:]
-print(len(support_set_list), len(query_set_list), len(holdout_test_list))
+data_list = read_data_list('/home/xiangcen/Selecting_performance-representative_Validation/data/data_dir_pancreas_h5.txt')
+train_list, test_list = data_list[:50], data_list[50:]
 
 
-
-seg_loader = create_data_loader(support_set_list, batch_size=args.batch_size)
-test_loader = create_data_loader(holdout_test_list, batch_size=args.batch_size)
+seg_loader = create_data_loader(train_list, batch_size=args.batch_size)
+test_loader = create_data_loader(test_list, batch_size=args.batch_size)
 
 
 #############################
@@ -56,12 +53,12 @@ Seg_model  =SwinUNETR((96, 96, 64), 1, 1).to(device)
 
 
 ##############################
-seg_optimizer = torch.optim.AdamW(Seg_model.parameters(), lr=1e-3)
+seg_optimizer = torch.optim.AdamW(Seg_model.parameters(), lr=1e-4)
 
 
 
 seg, test= [], []
-for e in range(80):
+for e in range(100):
     print("This is epoch: ", e)
     train_loss = train_seg_net_h5(Seg_model, seg_loader, seg_optimizer, seg_loss_function, device)
 
@@ -72,9 +69,10 @@ for e in range(80):
     test.append(test_loss)
     seg_t = torch.tensor(seg)
     test_t = torch.tensor(test)
-    torch.save(seg_t, './train_seg_results/seg_'+args.nickname+'.t')
-    torch.save(test_t, './train_seg_results/test_'+args.nickname+'.t')
+    torch.save(seg_t, './results/seg_results/'+args.nickname+'.t')
+    torch.save(test_t, './results/seg_results/test_'+args.nickname+'.t')
 
 
-    torch.save(Seg_model.state_dict(), './train_seg_results/seg_model_only_'+args.nickname+'.ptm')
+    torch.save(Seg_model.state_dict(), './models/seg_model_only_'+args.nickname+'.ptm')
     print('model saved!')
+

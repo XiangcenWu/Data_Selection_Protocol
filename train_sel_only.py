@@ -45,7 +45,7 @@ device = args.device
 
 ##############################
 
-data_list = read_data_list('/home/xiangcen/xiaoyao/prostate_training/data_preparation/data_dir_shuffled_obturator.txt')
+data_list = read_data_list('/home/xiangcen/Selecting_performance-representative_Validation/data/data_dir_pancreas_h5.txt')
 
 support_set_list, holdout_test_list = data_list[:469], data_list[469:]
 support_set_list, query_set_list = support_set_list[:189], support_set_list[189:]
